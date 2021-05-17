@@ -138,15 +138,15 @@ const ScrollableTabView = createReactClass({
     if (Platform.OS === 'ios') {
       const offset = pageNumber * this.state.containerWidth;
       if (this.scrollView) {
-        this.scrollView.scrollTo({x: offset, y: 0, animated: !this.props.scrollWithoutAnimation, });
+        this.scrollView.getNode().scrollTo({x: offset, y: 0, animated: !this.props.scrollWithoutAnimation, });
       }
     } else {
       if (this.scrollView) {
         this.tabWillChangeWithoutGesture = true;
         if (this.props.scrollWithoutAnimation) {
-          this.scrollView.setPageWithoutAnimation(pageNumber);
+          this.scrollView.getNode().setPageWithoutAnimation(pageNumber);
         } else {
-          this.scrollView.setPage(pageNumber);
+          this.scrollView.getNode().setPage(pageNumber);
         }
       }
     }
@@ -342,7 +342,7 @@ const ScrollableTabView = createReactClass({
     if (!width || width <= 0 || Math.round(width) === Math.round(this.state.containerWidth)) {
       return;
     }
-    
+
     if (Platform.OS === 'ios') {
       const containerWidthAnimatedValue = new Animated.Value(width);
       // Need to call __makeNative manually to avoid a native animated bug. See
